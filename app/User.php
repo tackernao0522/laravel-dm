@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isFlollowing($user_id)
+    {
+        // exists()でテーブルにレコードが存在しているかをチェック
+        return $this->follows()->where('followed_id', $user_id)->exsits();
+    }
+
+    public function isFollowed($user_id)
+    {
+        return $this->followers()->where('following_id', $user_id)->exists();
+    }
 }
